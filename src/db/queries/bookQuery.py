@@ -22,3 +22,7 @@ async def getAllBook():
     async for book in collections.find():
         books.append(convert_objectid(book))
     return books
+
+async def countBooks():
+    total = await collections.count_documents({})
+    return  total
