@@ -43,8 +43,8 @@ def upload_book(book:BookValidation):
                 "level":book.level,
         }
 
-        bookData.update(generateFlags('theme',book.theme))
-        bookData.update(generateFlags('subgenre',book.subgenre))
+        bookData.update(generateFlags('theme', book.theme))
+        bookData.update(generateFlags('subgenre',   book.subgenre))
 
         print(bookData)
 
