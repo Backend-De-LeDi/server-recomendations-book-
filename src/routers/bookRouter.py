@@ -1,10 +1,8 @@
-from fastapi import APIRouter, Form
+from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from src.validations.bookValidation import BookValidation
-from fastapi.encoders import jsonable_encoder
 from rich import print
 from src.client.chromaClient import initClient
-from src.utils.generateFlags import generateFlags
 
 bookRouter = APIRouter()
 
@@ -13,7 +11,6 @@ collection = initClient()
 @bookRouter.post('/books/upload')
 def upload_book(book:BookValidation):
     try:
-        # ? especificación de tipo de lenguaje para la IA debe saber que lenguaje es cada uno en base a las siglas 
 
         if(book.language == 'es'):
             language = 'español'
@@ -42,17 +39,16 @@ def upload_book(book:BookValidation):
                 "available":book.available,
                 "level":book.level,
         }
-
-        bookData.update(generateFlags('theme', book.theme))
-        bookData.update(generateFlags('subgenre',   book.subgenre))
-
-        print(bookData)
+            
 
         collection.add(
             documents=[textToEmbed],
             ids=[str(book.id)],
             metadatas=bookData
         )
+
+        print(f"Libro {book.title} subido correctamente")
+        
         return JSONResponse(content={'msg':'libro recibido'},status_code=200)
     except Exception as e:
         print(f"Error: {e}")
