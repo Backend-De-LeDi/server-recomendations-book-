@@ -7,12 +7,15 @@ collection = initClient()
 
 
 
-result = collection.query(
-    query_texts=["¿Qué libro me recomiendas?"],
-    n_results=5,
-    
-)
+result = collection.delete(ids=["689b5ac49dbc1a05772ebd45"])
 
 print(result)
-     
+
+result = collection.query(
+    query_texts=["¿Qué libro me recomiendas?"],
+
+    )
+
+print(result)
+
      
