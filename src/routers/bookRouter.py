@@ -53,3 +53,13 @@ def upload_book(book:BookValidation):
     except Exception as e:
         print(f"Error: {e}")
         return JSONResponse(content={"msg":"error inesperado en el servidor por favor intente de nuevo"}, status_code=500)
+    
+@bookRouter.delete('/books/{id}')
+def delete_book(id: str):
+    try:
+        collection.delete(ids=[id])
+        print(f"Libro con id {id} eliminado correctamente")
+        return JSONResponse(content={'msg':'libro eliminado'},status_code=200)
+    except Exception as e:
+        print(f"Error: {e}")
+        return JSONResponse(content={"msg":"error inesperado en el servidor por favor intente de nuevo"}, status_code=500)

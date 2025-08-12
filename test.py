@@ -1,14 +1,18 @@
-import asyncio
-from src.db.connection import db
-from src.db.queries.bookQuery import convert_objectid
+from src.client.chromaClient import initClient
+from rich import print
 
-collections = db['books']
 
-async def getAllBook():
-    books = []
-    async for book in collections.find():
-        books.append(convert_objectid(book))
-    print(books)
+collection = initClient()
 
-if __name__ == "__main__":
-    asyncio.run(getAllBook())
+
+
+
+result = collection.query(
+    query_texts=["¿Qué libro me recomiendas?"],
+    n_results=5,
+    
+)
+
+print(result)
+     
+     
